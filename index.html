@@ -3,17 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Flatfile Countdown Site</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+  <title>Cute Countdown Site</title>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500&display=swap" rel="stylesheet">
   <style>
-	* {
-	  font-family: "Pacifico", cursive;
-	  font-weight: 400;
-	  font-style: normal;
-	}
-    /* === Cute Pink Theme === */
     :root {
       --pink-bg: #ffeaf4;
       --pink-dark: #ff8cbf;
@@ -24,28 +16,30 @@
 
     body {
       background-color: var(--pink-bg);
-      font-family: 'CuteFont', sans-serif; /* Replace with your custom font */
+      font-family: 'Quicksand', sans-serif;
       color: var(--text-color);
       text-align: center;
-      padding-top: 80px;
+      padding: 40px 20px;
+      margin: 0;
     }
 
     h1 {
-      font-size: 2.5em;
+      font-size: 2em;
       margin-bottom: 20px;
     }
 
     #countdown {
-      font-size: 4em;
+      font-size: 3em;
       margin-bottom: 30px;
       color: var(--pink-dark);
     }
 
     .button-container {
       position: relative;
-      display: inline-block;
-      height: 250px;
-      width: 500px;
+      width: 100%;
+      max-width: 300px;
+      height: 300px;
+      margin: 0 auto;
       border: 3px dashed var(--pink-mid);
       border-radius: 20px;
       background-color: var(--pink-light);
@@ -53,8 +47,8 @@
     }
 
     button {
-      padding: 15px 35px;
-      font-size: 1.5em;
+      padding: 15px 30px;
+      font-size: 1.3em;
       border: none;
       border-radius: 30px;
       background-color: var(--pink-mid);
@@ -64,35 +58,53 @@
       transition: all 0.2s ease-in-out;
     }
 
-    button:hover {
-      background-color: var(--pink-dark);
-      transform: scale(1.05);
+    button:active {
+      transform: scale(0.95);
     }
 
     #yes {
       position: absolute;
-      left: 50px;
-      top: 100px;
+      left: 50%;
+      transform: translateX(-50%);
+      top: 80px;
     }
 
     #no {
       position: absolute;
-      left: 300px;
-      top: 100px;
+      left: 50%;
+      transform: translateX(-50%);
+      top: 180px;
       transition: left 0.2s ease, top 0.2s ease;
+    }
+
+    dialog {
+      border: none;
+      border-radius: 20px;
+      padding: 20px;
+      background-color: var(--pink-light);
+      font-size: 1.5em;
+      color: var(--pink-dark);
+      box-shadow: 0 0 10px #ffaad8;
+    }
+
+    dialog::backdrop {
+      background: rgba(0, 0, 0, 0.3);
     }
   </style>
 </head>
 <body>
-  <h1>Will You Move In With Me Next Year?</h1>
+  <h1>Do You Love Cute Things?</h1>
   <div id="countdown">30</div>
+
   <div class="button-container">
     <button id="yes">Yes 💖</button>
-    <button id="no">No 😢</button>
+    <button id="no">No 🙈</button>
   </div>
 
+  <dialog id="yayDialog">YAYYYYY 💕🎉</dialog>
+
   <script>
-    // Countdown
+    // Countdown logic
     let timeLeft = 30;
     const countdown = document.getElementById('countdown');
     const timer = setInterval(() => {
@@ -104,11 +116,11 @@
       }
     }, 1000);
 
-    // Move the No button far enough away
+    // No button moves on click (touch-friendly)
     const noBtn = document.getElementById('no');
     const container = document.querySelector('.button-container');
 
-    noBtn.addEventListener('mouseover', (e) => {
+    noBtn.addEventListener('click', (e) => {
       const containerRect = container.getBoundingClientRect();
       const mouseX = e.clientX - containerRect.left;
       const mouseY = e.clientY - containerRect.top;
@@ -125,6 +137,17 @@
 
       noBtn.style.left = `${newX}px`;
       noBtn.style.top = `${newY}px`;
+    });
+
+    // Yes button shows dialog
+    const yesBtn = document.getElementById('yes');
+    const yayDialog = document.getElementById('yayDialog');
+
+    yesBtn.addEventListener('click', () => {
+      yayDialog.showModal();
+      setTimeout(() => {
+        yayDialog.close();
+      }, 2000); // Auto-close after 2 seconds
     });
   </script>
 </body>
