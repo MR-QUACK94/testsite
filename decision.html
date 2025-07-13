@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Flatfile Countdown Site</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+  <style>
+	* {
+	  font-family: "Pacifico", cursive;
+	  font-weight: 400;
+	  font-style: normal;
+	}
+    /* === Cute Pink Theme === */
+    :root {
+      --pink-bg: #ffeaf4;
+      --pink-dark: #ff8cbf;
+      --pink-mid: #ffa3d1;
+      --pink-light: #ffcbe6;
+      --text-color: #a3446a;
+    }
+
+    body {
+      background-color: var(--pink-bg);
+      font-family: 'CuteFont', sans-serif; /* Replace with your custom font */
+      color: var(--text-color);
+      text-align: center;
+      padding-top: 80px;
+    }
+
+    h1 {
+      font-size: 2.5em;
+      margin-bottom: 20px;
+    }
+
+    #countdown {
+      font-size: 4em;
+      margin-bottom: 30px;
+      color: var(--pink-dark);
+    }
+
+    .button-container {
+      position: relative;
+      display: inline-block;
+      height: 250px;
+      width: 500px;
+      border: 3px dashed var(--pink-mid);
+      border-radius: 20px;
+      background-color: var(--pink-light);
+      box-shadow: 0 0 15px #fdbfdaaa;
+    }
+
+    button {
+      padding: 15px 35px;
+      font-size: 1.5em;
+      border: none;
+      border-radius: 30px;
+      background-color: var(--pink-mid);
+      color: white;
+      cursor: pointer;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      transition: all 0.2s ease-in-out;
+    }
+
+    button:hover {
+      background-color: var(--pink-dark);
+      transform: scale(1.05);
+    }
+
+    #yes {
+      position: absolute;
+      left: 50px;
+      top: 100px;
+    }
+
+    #no {
+      position: absolute;
+      left: 300px;
+      top: 100px;
+      transition: left 0.2s ease, top 0.2s ease;
+    }
+  </style>
+</head>
+<body>
+  <h1>Will You Move In With Me Next Year?</h1>
+  <div id="countdown">30</div>
+  <div class="button-container">
+    <button id="yes">Yes 💖</button>
+    <button id="no">No 😢</button>
+  </div>
+
+  <script>
+    // Countdown
+    let timeLeft = 30;
+    const countdown = document.getElementById('countdown');
+    const timer = setInterval(() => {
+      timeLeft--;
+      countdown.textContent = timeLeft;
+      if (timeLeft <= 0) {
+        clearInterval(timer);
+        countdown.textContent = "Time's up!";
+      }
+    }, 1000);
+
+    // Move the No button far enough away
+    const noBtn = document.getElementById('no');
+    const container = document.querySelector('.button-container');
+
+    noBtn.addEventListener('mouseover', (e) => {
+      const containerRect = container.getBoundingClientRect();
+      const mouseX = e.clientX - containerRect.left;
+      const mouseY = e.clientY - containerRect.top;
+      const buffer = 100;
+      let newX, newY, distance;
+
+      do {
+        newX = Math.random() * (container.offsetWidth - noBtn.offsetWidth);
+        newY = Math.random() * (container.offsetHeight - noBtn.offsetHeight);
+        const dx = newX - mouseX;
+        const dy = newY - mouseY;
+        distance = Math.sqrt(dx * dx + dy * dy);
+      } while (distance < buffer);
+
+      noBtn.style.left = `${newX}px`;
+      noBtn.style.top = `${newY}px`;
+    });
+  </script>
+</body>
+</html>
